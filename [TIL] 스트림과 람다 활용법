@@ -1,0 +1,83 @@
+--> lv0 정답률이 높은 순서부터 10개 풀이 
+--> 신기한 아이디어나 처음 보는 형식의 코드 기록 
+
+
+📍 정수 num1과 num2가 매개변수로 주어질 때, num1을 num2로 나눈 값에 1,000을 곱한 후 정수 부분을 return 하도록 solution 함수를 완성해주세요.
+
+class Solution {
+    public int solution(int num1, int num2) {
+        int answer = 0;
+        return num1 * 1000 / num2;
+    }
+}
+
+-> double로 형변환, int로 형변환을 통해 해당 문제를 풀이했는데, 위와 같이 풀이한 사람이 인상깊었음
+-> num1에 1000을 곱하면 num2보다 무조건 큰 값이 되는 변수 범위였기 때문에 위와 같이 풀이했을 경우 불필요한 연산을 하지 않아도 되는 걸로 보임
+
+
+📍 머쓱이는 선생님이 몇 년도에 태어났는지 궁금해졌습니다. 2022년 기준 선생님의 나이 age가 주어질 때, 선생님의 출생 연도를 return 하는 solution 함수를 완성해주세요.
+
+import java.time.*;
+class Solution {
+    public int solution(int age) {
+        LocalDate today = LocalDate.now();
+        return today.getYear() - age + 1;
+    }
+}
+
+-> 2022 - age + 1을 리턴하는방식으로 풀이했는데, 이 분은 LocalDate라는 클래스를 통해 풀이
+-> 여러 댓글에는 2026년도이므로 2022년 값과 다르다는 점을 지적했지만, 문제가 2022년이 아닌 현재 기준이라면 효율적으로 수정없는 코드 같이 보였음
+-> LogicalDate.now().getYear()을 통해 오늘에 해당하는 년도를 추출해 계산하는식으로 보임    
+
+
+📍 정수 n이 매개변수로 주어질 때, n 이하의 홀수가 오름차순으로 담긴 배열을 return하도록 solution 함수를 완성해주세요.
+
+import java.util.stream.IntStream;
+
+class Solution {
+    public int[] solution(int n) {
+        return IntStream.rangeClosed(0, n).filter(value -> value % 2 == 1).toArray();
+    }
+}
+
+-> 반복문과 if 조건 등을 활용해 홀수를 순서대로 배열에 담는 방식으로 풀이했는데, 위 사람은 Stream을 통해 풀이
+-> 해당 코드를 전혀 이해할 수 없어서 해석하기 위해 찾아봄
+-> IntStream.rangeClosed(0,n): 0부터 n까지 정수를 1단위로 모두 나열
+-> .filter(value -> value % 2 == 1): 나열된 값을 value로 받아 나머지가 1인 경우에만 true로 필터링해 값을 남김
+-> .toArray(): 해당 값들을 정수 배열로 생성
+-> Stream, filter, Lamda를 살짝 접하고 사용법을 익힐수 있었음 
+
+import java.util.List;
+import java.util.ArrayList;
+
+class Solution {
+    public int[] solution(int n) {
+        List<Integer> answer = new ArrayList<>();
+        for(int i=1; i<=n; i++){
+            if(i % 2 == 1){
+                answer.add(i);
+            }
+        }
+        return answer.stream().mapToInt(x -> x).toArray();
+    }
+}
+
+-> 위와 비슷하게 스트림과 람다 등을 활용한 풀이 
+-> ArrayList로 반환해버리면 끝나지만, 문제로 나온 solution 메서드의 반환형 int[]를 유지하기 위해 다음과 같이 풀이
+-> answer.stream(): stream을 통해 데이터를 한줄로 나열
+-> .mapToInt(x -> x): Integer 값들을 int형 변수로 변환 
+-> .toArray(): 해당 값들을 정수 배열로 생성
+-> 위 코드를 친절하게 풀어쓰면 .mapToInt(x -> x.intValue()) // 위 코드를 실무에서는 answer.stream().mapToInt(Integer::intValue).toArray(); 로 사용   
+
+
+📍 머쓱이네 피자가게는 피자를 일곱 조각으로 잘라 줍니다. 피자를 나눠먹을 사람의 수 n이 주어질 때, 모든 사람이 피자를 한 조각 이상 먹기 위해 필요한 피자의 수를 return 하는 solution 함수를 완성해보세요.
+
+class Solution {
+    public int solution(int n) {
+        return (n + 6) / 7;
+    }
+}
+
+-> 삼항 연산자를 통해 풀이했는데, 신기한 계산법이 있어서 봤더니 7개까지는 13으로 1판, 8개부터는 2판, 14개까지는 20으로 2판 이런식으로 계산되는 식이었음 
+
+
